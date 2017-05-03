@@ -34,12 +34,15 @@ if (NOT MSVC)
 endif()
 
 add_library(_segyio MODULE segyio/_segyio.c)
-target_include_directories(_segyio PRIVATE ${PYTHON_INCLUDE_DIRS})
-target_link_libraries(_segyio segyio ${PYTHON_LIBRARIES})
+target_include_directories(_segyio SYSTEM PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_link_libraries(_segyio PUBLIC segyio)
 export(TARGETS _segyio segyio-shared segyio-static APPEND FILE segyio-config.cmake)
 
 add_python_package(pysegyio segyio
                     TARGETS _segyio
+                    DEPEND_DIRS segyio ${CMAKE_SOURCE_DIR}/lib
+                    VERSION ${segyio_VERSION}
+                    VERSION__INIT__
                     SOURCES segyio/__init__.py
                             segyio/_header.py
                             segyio/_gather.py
@@ -55,6 +58,12 @@ add_python_package(pysegyio segyio
                             segyio/create.py
                             segyio/segysampleformat.py
                             segyio/tracesortingformat.py)
+
+add_setup_py(pysegyio setup.py.in)
+
+# Add license & readme to the pip distribution
+configure_file(${CMAKE_SOURCE_DIR}/License.md License)
+configure_file(${CMAKE_SOURCE_DIR}/README.md README)
 
 file(GLOB sgys "${CMAKE_SOURCE_DIR}/test-data/*.sgy")
 foreach (sgy ${sgys})
