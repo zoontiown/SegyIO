@@ -3,7 +3,7 @@ project(segyio)
 
 set(segyio_MAJOR 1)
 set(segyio_MINOR 0)
-set(segyio_PATCH 9b1)
+set(segyio_PATCH 9b2)
 set(segyio_VERSION ${segyio_MAJOR}.${segyio_MINOR}.${segyio_PATCH})
 
 if (POLICY CMP0042)
