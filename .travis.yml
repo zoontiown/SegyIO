@@ -60,9 +60,12 @@ install:
   # system-installed, incompatible python lib.
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update && brew install cppcheck;
-      prefix=`python-config --prefix`;
-      ext=`python-config --extension`;
-      pylib=$prefix/lib/libpython$MB_PYTHON_VERSION.$ext;
+
+      if [[ -n "${MB_PYTHON_VERSION+1}" ]]; then
+        prefix=`python-config --prefix`;
+        ext=`python-config --extension`;
+        pypath=$prefix/lib/libpython$MB_PYTHON_VERSION.$ext;
+        pylib="-DPYTHON_LIBRARY=$pypath";
     fi
   - pip install numpy --upgrade
 
@@ -70,9 +73,6 @@ before_script:
   - enabled="-DBUILD_PYTHON=OFF -DBUILD_MEX=OFF"
   - if [[ -n "${MB_PYTHON_VERSION+1}" ]]; then
         enabled="$enabled -DBUILD_PYTHON=ON";
-        if [[ $TRAVIS_OS_NAME == osx ]]; then
-            pylib="-DPYTHON_LIBRARY=$pylib";
-        fi;
     fi
   - cmake --version
   - mkdir build
