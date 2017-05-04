@@ -72,9 +72,9 @@ before_script:
         enabled="$enabled -DBUILD_PYTHON=ON";
         # on os x, python is set up in a virtualenv, but cmake tends to find a
         # system-installed, incompatible python lib.
-        prefix=`python-config --prefix`
-        ext=`python-config --extension`
-        PYLIB="-DPYTHON_LIBRARY=$prefix/lib/libpython$MB_PYTHON_VERSION.$ext"
+        prefix=`python-config --prefix`;
+        ext=`python-config --extension`;
+        PYLIB="-DPYTHON_LIBRARY=$prefix/lib/libpython$MB_PYTHON_VERSION.$ext";
     fi
   - cmake --version
   - mkdir build
