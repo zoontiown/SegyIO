@@ -71,7 +71,7 @@ before_script:
   - if [[ -n "${MB_PYTHON_VERSION+1}" ]]; then
         enabled="$enabled -DBUILD_PYTHON=ON";
         if [[ $TRAVIS_OS_NAME == osx ]]; then
-            pylib="-DPYTHON_LIBRARY=$pylib"
+            pylib="-DPYTHON_LIBRARY=$pylib";
         fi;
     fi
   - cmake --version
