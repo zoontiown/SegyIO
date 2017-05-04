@@ -70,11 +70,16 @@ before_script:
   - enabled="-DBUILD_PYTHON=OFF -DBUILD_MEX=OFF"
   - if [[ -n "${MB_PYTHON_VERSION+1}" ]]; then
         enabled="$enabled -DBUILD_PYTHON=ON";
+        pythonlib="-DPYTHON_LIBRARY='`python-config --prefix`/lib/libpython2.7.dylib"
     fi
   - cmake --version
   - mkdir build
   - pushd build
-  - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=ON $enabled  ..
+  - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          -DBUILD_SHARED_LIBS=ON
+          $pythonlib
+          $enabled  ..
   - cppcheck --language=c
              --std=c99
              --enable=style,portability,performance,warning
