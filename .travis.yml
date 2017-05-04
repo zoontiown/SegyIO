@@ -62,7 +62,7 @@ install:
         brew update && brew install cppcheck;
         if [[ -n "${MB_PYTHON_VERSION+1}" ]]; then
             prefix=`python-config --prefix`;
-            ext=`python-config --extension`;
+            ext=`python-config --extension-suffix`;
             pypath=$prefix/lib/libpython$MB_PYTHON_VERSION.$ext;
             pylib="-DPYTHON_LIBRARY=$pypath";
         fi
