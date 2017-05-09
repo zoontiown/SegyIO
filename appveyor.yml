@@ -85,9 +85,7 @@ after_deploy:
 
 deploy_script:
     - ps: |
-          If ($env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null
-         -And $env:configuration -eq "Static"
-         -And $env:APPVEYOR_REPO_BRANCH -eq "master") {
+          If ($env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null -And $env:configuration -eq "Static" -And $env:APPVEYOR_REPO_BRANCH -eq "master") {
             Invoke-Expression "twine upload -u statoil-travis -p $env:pypipassword --skip-existing dist/*"
             if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  }
           }
